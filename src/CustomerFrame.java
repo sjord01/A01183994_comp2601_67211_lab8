@@ -10,14 +10,20 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Random;
 import java.awt.event.InputEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class CustomerFrame extends JFrame {
 
-	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private ArrayList<Customer> customers;
+	
+	private static final long serialVersionUID = 1L;
+	
+	private static final String FILEPATH_CUSTOMERS = "src//customers.txt";
 
 	/**
 	 * Launch the application.
@@ -54,7 +60,7 @@ public class CustomerFrame extends JFrame {
 		JMenuItem showRandomCustomer = new JMenuItem("Customer");
 		showRandomCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				showRandomCustomerDialog();
 			}
 		});
 		showRandomCustomer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK));
@@ -89,6 +95,19 @@ public class CustomerFrame extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[]", "[]"));
+		
+		customers = Lab8.loadCustomers(FILEPATH_CUSTOMERS);
 	}
+	
+	 private void showRandomCustomerDialog() {
+	        if (customers != null && !customers.isEmpty()) {
+	            Random random = new Random();
+	            Customer randomCustomer = customers.get(random.nextInt(customers.size()));
+	            CustomerDialog dialog = new CustomerDialog(this, randomCustomer);
+	            dialog.setVisible(true);
+	        } else {
+	            JOptionPane.showMessageDialog(this, "No customers available", "Error", JOptionPane.ERROR_MESSAGE);
+	        }
 
+	 }
 }
