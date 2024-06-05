@@ -15,6 +15,13 @@ import java.awt.Color;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 
+/**
+ * A dialog interface for displaying and editing customer data.
+ * 
+ * @author Samson James Ordonez
+ * @version 1.0
+ */
+
 public class CustomerDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
@@ -43,8 +50,10 @@ public class CustomerDialog extends JDialog {
 
 	/**
 	 * Create the dialog.
-	 * @param randomCustomer 
-	 * @param customerFrame 
+	 *
+	 * @param customerFrame  the customer frame
+	 * @param randomCustomer the customer to display/edit, or null to create a new
+	 *                       customer
 	 */
 	public CustomerDialog(CustomerFrame customerFrame, Customer randomCustomer) {
 		setTitle("Customer Data");
@@ -55,9 +64,9 @@ public class CustomerDialog extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new MigLayout("", "[][grow]", "[][][][][][][][]"));
-		
+
 		EmptyBorder textFieldBorder = new EmptyBorder(3, 8, 3, 8);
-		
+
 		{
 			JLabel customerID = new JLabel("ID");
 			contentPanel.add(customerID, "cell 0 0,alignx trailing");
@@ -157,20 +166,19 @@ public class CustomerDialog extends JDialog {
 			okButton.setActionCommand("OK");
 			buttonPane.add(okButton, "alignx right,aligny center");
 			getRootPane().setDefaultButton(okButton);
-			buttonPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{okButton}));
+			buttonPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { okButton }));
 		}
-		
-		// Populate fields with randomCustomer data
-        if (randomCustomer != null) {
-            textField_ID.setText(String.valueOf(randomCustomer.getId()));
-            textField_firstName.setText(randomCustomer.getFirstName());
-            textField_lastName.setText(randomCustomer.getLastName());
-            textField_street.setText(randomCustomer.getStreet());
-            textField_city.setText(randomCustomer.getCity());
-            textField_postalCode.setText(randomCustomer.getPostalCode());
-            textField_phone.setText(randomCustomer.getPhone());
-            textField_email.setText(randomCustomer.getEmail());
-        }
+
+		if (randomCustomer != null) {
+			textField_ID.setText(String.valueOf(randomCustomer.getId()));
+			textField_firstName.setText(randomCustomer.getFirstName());
+			textField_lastName.setText(randomCustomer.getLastName());
+			textField_street.setText(randomCustomer.getStreet());
+			textField_city.setText(randomCustomer.getCity());
+			textField_postalCode.setText(randomCustomer.getPostalCode());
+			textField_phone.setText(randomCustomer.getPhone());
+			textField_email.setText(randomCustomer.getEmail());
+		}
 	}
 
 }
